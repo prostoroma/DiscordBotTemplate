@@ -2,6 +2,7 @@ using Discord;
 using Discord.Addons.Hosting;
 using Discord.WebSocket;
 using DiscordBot.Database.Extensions;
+using DiscordBot.Permissions.Extensions;
 using DiscordBotTemplate.Handlers;
 using Serilog;
 using Serilog.Events;
@@ -45,6 +46,7 @@ try
         .ConfigureServices((context, services) =>
         {
             //services.AddDatabaseLayer(context.Configuration);
+            services.UsePermissions();
             services.AddHostedService<InteractionHandler>();
         }).Build();
 
@@ -55,6 +57,8 @@ try
 catch (Exception ex)
 {
     Log.Fatal(ex, "Произошла внутреняя ошибка. Бот уничтожен.");
+
+    Console.ReadKey();
     
     return 1;
 }
