@@ -399,3 +399,5 @@ FodyWeavers.xsd
 .idea/
 
 appsettings.Development.json
+interaction_modules.json
+permission_groups.yml

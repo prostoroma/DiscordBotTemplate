@@ -1,8 +1,11 @@
 ﻿using System.Diagnostics;
+using System.Net.NetworkInformation;
 using Discord.Interactions;
+using DiscordBot.Permissions.Attributes;
 
 namespace DiscordBotTemplate.Modules.General;
 
+[ProtectedModule(nameof(PingCommand))]
 public class PingCommand : InteractionBase
 {
     [SlashCommand("ping", "pong")]

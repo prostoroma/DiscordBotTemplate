@@ -4,6 +4,7 @@ using Discord.Addons.Hosting;
 using Discord.Addons.Hosting.Util;
 using Discord.Interactions;
 using Discord.WebSocket;
+using DiscordBot.Permissions.Features.Configuration;
 
 namespace DiscordBotTemplate.Handlers;
 
@@ -32,7 +33,25 @@ internal class InteractionHandler : DiscordClientService
         _interactionService.ContextCommandExecuted += OnContextCommandExecuted;
         _interactionService.ComponentCommandExecuted += OnComponentCommandExecuted;
 
-        await _interactionService.AddModulesAsync(Assembly.GetEntryAssembly(), _provider);
+        var interactionConfig = _provider.GetService<InteractionModulesConfig>();
+        
+        if (interactionConfig != null)
+        {
+            Logger.LogInformation("Будет использована система защиты команд с помощью настроенных прав");
+            
+            var enabledModules = DiscordBot.Permissions.Features.Functions.Helpers.GetEnabledModules(Assembly.GetEntryAssembly()!, interactionConfig);
+
+            foreach (var module in enabledModules)
+            {
+                await _interactionService.AddModuleAsync(module, _provider);
+                Logger.LogInformation("Включен модуль {0}", module.Name);
+            }
+        }
+        else
+        {
+            await _interactionService.AddModulesAsync(Assembly.GetEntryAssembly(), _provider);
+        }
+
         await Client.WaitForReadyAsync(stoppingToken);
 
         if (_environment.IsDevelopment())

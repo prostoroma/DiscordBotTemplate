@@ -24,5 +24,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DiscordBot.Database\DiscordBot.Database.csproj" />
+      <ProjectReference Include="..\DiscordBot.Permissions\DiscordBot.Permissions.csproj" />
     </ItemGroup>
 </Project>
