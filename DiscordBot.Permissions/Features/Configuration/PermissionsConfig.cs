@@ -34,7 +34,7 @@ public class PermissionsConfig
 
     public List<PermissionRecord> PermissionRecords { get; private init; }
 
-    public static PermissionsConfig GetPermissionsConfigAsync()
+    public static PermissionsConfig GetPermissionsConfig()
     {
         if (!File.Exists(PermissionConfigPath))
             throw new FileNotFoundException("Файл конфигурации не найден!");
@@ -46,7 +46,7 @@ public class PermissionsConfig
         return permissionsConfig;
     }
 
-    public static void CreateDefaultPermissionsConfigAsync()
+    public static void CreateDefaultPermissionsConfig()
     {
         var defaultPermissionsConfig = new PermissionsConfig(
             new List<PermissionRecord>

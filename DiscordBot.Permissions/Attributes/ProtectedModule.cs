@@ -35,7 +35,7 @@ public class ProtectedModule : PreconditionAttribute
         if (requiredPermissions == null)
             throw new NullReferenceException("Не найдена установка прав для команды");
 
-        var permissionConfig = PermissionsConfig.GetPermissionsConfigAsync();
+        var permissionConfig = PermissionsConfig.GetPermissionsConfig();
 
         if (context.User is not IGuildUser guildUser)
             throw new NullReferenceException("Пользователь не найден");

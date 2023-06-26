@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
         const string ConfigurationPath = "permission_groups.json";
         try
         {
-            var config = PermissionsConfig.GetPermissionsConfigAsync();
+            var config = PermissionsConfig.GetPermissionsConfig();
 
             serviceCollection.AddSingleton(config);
             
@@ -24,9 +24,9 @@ public static class ServiceCollectionExtensions
         }
         catch (FileNotFoundException)
         {
-            PermissionsConfig.CreateDefaultPermissionsConfigAsync();
+            PermissionsConfig.CreateDefaultPermissionsConfig();
 
-            var config = PermissionsConfig.GetPermissionsConfigAsync();
+            var config = PermissionsConfig.GetPermissionsConfig();
 
             serviceCollection.AddSingleton(config);
             
