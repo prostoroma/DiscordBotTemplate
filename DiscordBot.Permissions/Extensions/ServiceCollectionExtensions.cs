@@ -13,12 +13,13 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddPermissionConfig(this IServiceCollection serviceCollection)
     {
-        const string configurationPath = "permission_groups.json";
+        const string ConfigurationPath = "permission_groups.json";
         try
         {
             var config = PermissionsConfig.GetPermissionsConfigAsync();
 
             serviceCollection.AddSingleton(config);
+            
             return serviceCollection;
         }
         catch (FileNotFoundException)
@@ -28,6 +29,7 @@ public static class ServiceCollectionExtensions
             var config = PermissionsConfig.GetPermissionsConfigAsync();
 
             serviceCollection.AddSingleton(config);
+            
             return serviceCollection;
         }
     }
@@ -56,7 +58,7 @@ public static class ServiceCollectionExtensions
 
         var configuredModules = config.InteractionModules.ToList();
 
-        if (availableModules.Count != configuredModules.Count)
+        if (availableModules.ToList().Count() != configuredModules.Count)
         {
             Helpers.ConfigureModules(availableModules, configuredModules);
 

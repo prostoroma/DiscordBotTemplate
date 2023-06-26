@@ -7,22 +7,21 @@ namespace DiscordBot.Permissions.Features.Functions;
 
 public static class Helpers
 {
-    internal static List<Type> GetAvailableModules(Assembly assembly)
+    internal static IEnumerable<Type> GetAvailableModules(Assembly assembly)
     {
-        return assembly
-            .GetTypes()
+        return assembly.GetTypes()
             .Where(type => type.GetCustomAttribute<ProtectedModule>() != null)
             .ToList();
     }
 
-    internal static List<InteractionModule> RegisterModules(List<Type> availableModules)
+    internal static IEnumerable<InteractionModule> RegisterModules(IEnumerable<Type> availableModules)
     {
         return availableModules
             .Select(module => new InteractionModule(true, module.Name, 255, null))
             .ToList();
     }
 
-    public static List<Type> GetEnabledModules(Assembly assembly, InteractionModulesConfig config)
+    public static IEnumerable<Type> GetEnabledModules(Assembly assembly, InteractionModulesConfig config)
     {
         return GetAvailableModules(assembly)
             .Where(type => type.GetCustomAttribute<ProtectedModule>()!
@@ -30,7 +29,7 @@ public static class Helpers
             .ToList();
     }
 
-    internal static List<InteractionModule> ConfigureModules(List<Type> availableModules,
+    internal static IEnumerable<InteractionModule> ConfigureModules(IEnumerable<Type> availableModules,
         List<InteractionModule> configuredModules)
     {
         var missingModules = new List<InteractionModule>();
